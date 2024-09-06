@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Vinay Aur Madhu
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-center mt-4">Welcome to the Blog Website</h1>
+    <a class="btn btn-primary mb-4" href="{% url 'tweet_create' %}">Create a Tweet</a>
+
+    <div class="container">
+        <div class="row">
+            {% for tweet in tweets %}
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="{{ tweet.photo.url }}" class="card-img-top" alt="Tweet Photo">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ tweet.user.username }}</h5>
+                            <p class="card-text">{{ tweet.text }}</p>
+                            {% if tweet.user == user %}
+                                <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-primary">Edit</a>
+                                <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-danger">Delete</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+<!-- Custom Styles and Animations -->
+<style>
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-img-top {
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .card-body {
+        padding: 1.25rem;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .card-text {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .btn {
+        margin-right: 0.5rem;
+    }
+
+    .container {
+        padding-top: 20px;
+    }
+</style>
